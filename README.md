@@ -8,8 +8,8 @@ Simply define your wanted changelists and assign files via a simple wildcard-pat
 
 ##Screenshots
 ![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/screenshots/settings.png)
-![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/screenshots/icons/changelist-before.png)
-![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/screenshots/icons/changelist-after.png)
+![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/screenshots/changelist-before.png)
+![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/screenshots/changelist-after.png)
 
 ##Changelog
 #### **v1.0** (2016-10-27):
@@ -18,6 +18,6 @@ Simply define your wanted changelists and assign files via a simple wildcard-pat
 ###Author
 Developed by *Achim Seufert*
 
-Website:[achimonline.de](http://www.achimonline.de)
+Website: [achimonline.de](http://www.achimonline.de)
 
 eMail: [intellij@achimonline.de](mailto:intellij@achimonline.de)
