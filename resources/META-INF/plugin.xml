@@ -1,0 +1,45 @@
+<idea-plugin version="2">
+
+  <id>de.achimonline.changelistorganizer</id>
+  <name>Changelist Organizer</name>
+  <version>1.0</version>
+  <vendor email="intellij@achimonline.de" url="http://changelistorganizer.achimonline.de">Changelist Organizer</vendor>
+
+  <description><![CDATA[
+      Automatically organizes your modified files by moving them into predefined changelists.
+    ]]></description>
+
+  <change-notes><![CDATA[
+      <b>1.0</b>
+      <ul>
+        <li>initial version</li>
+      </ul>
+    ]]>
+  </change-notes>
+
+  <idea-version since-build="141.0"/>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <projectConfigurable id="ChangelistOrganizer"
+                         groupId="tools"
+                         instance="de.achimonline.changelistorganizer.component.ProjectSettingsConfigurable"
+                         key="settings.project.groupTitle"
+                         bundle="de.achimonline.changelistorganizer.changelistorganizer" />
+  </extensions>
+
+  <project-components>
+    <component>
+      <implementation-class>de.achimonline.changelistorganizer.component.ProjectSettingsComponent</implementation-class>
+    </component>
+  </project-components>
+
+  <actions>
+    <action id="ChangesViewToolbarAction" class="de.achimonline.changelistorganizer.action.ChangesViewToolbarAction">
+      <add-to-group group-id="ChangesViewToolbar" anchor="last"/>
+    </action>
+    <action id="SelectedChangelistPopupAction" class="de.achimonline.changelistorganizer.action.SelectedChangelistPopupAction">
+      <add-to-group group-id="ChangesViewPopupMenu" anchor="last"/>
+    </action>
+  </actions>
+
+</idea-plugin>
