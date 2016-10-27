@@ -8,7 +8,9 @@ Simply define your wanted changelists and assign files via a simple wildcard-pat
 
 ##Screenshots
 ![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/screenshots/settings.png)
+---
 ![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/screenshots/changelist-before.png)
+---
 ![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/screenshots/changelist-after.png)
 
 ##Changelog

@@ -5,6 +5,7 @@ import com.intellij.openapi.util.IconLoader;
 import com.intellij.ui.table.JBTable;
 import de.achimonline.changelistorganizer.ChangelistOrganizerItem;
 import de.achimonline.changelistorganizer.ChangelistOrganizerStrings;
+import org.apache.commons.lang.ObjectUtils;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -189,21 +190,9 @@ public class ProjectSettingsPane implements Disposable {
                     break;
             }
 
-            if (!objectValuesAreEqual(newValue, oldValue)) {
+            if (!ObjectUtils.equals(newValue, oldValue)) {
                 modified = true;
             }
-        }
-
-        private boolean objectValuesAreEqual(Object value1, Object value2) {
-            if (value1.getClass() == Boolean.class && value2.getClass() == Boolean.class) {
-                return ((Boolean) value1).equals((Boolean) value2);
-            }
-
-            if (value1.getClass() == String.class && value2.getClass() == String.class) {
-                return ((String) value1).equals((String) value2);
-            }
-
-            return false;
         }
     }
 
