@@ -34,7 +34,7 @@ Or go to the [plugin page](https://plugins.jetbrains.com/plugin/9216?pr=idea) on
 #### **v1.0** (2016-10-27):
 * initial release
 
-###Author
+##Author
 Developed by *Achim Seufert*
 
 Website: [achimonline.de](http://www.achimonline.de)
