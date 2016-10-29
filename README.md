@@ -18,10 +18,16 @@ Use the IDE's built-in plugin system:
 
 <kbd>Preferences</kbd> &rarr; <kbd>Plugins</kbd> &rarr; <kbd>Browse repositories...</kbd> &rarr; <kbd>Search for "Changelist Organizer"</kbd> &rarr; <kbd>Install Plugin</kbd>
 
+Or go to the [plugin page](https://plugins.jetbrains.com/plugin/9216?pr=idea) on the JetBrains-website, download the archive-file and install manually.
+
 ##Changelog
+#### **v1.2** (2016-10-30):
+* new feature/setting: apply organizer-items on current default-changelist only
+* bugfixes
+
 #### **v1.1** (2016-10-29):
 * organizer-items can be ordered now
-* new settings:
+* new features/settings:
   - stop applying items on a file after first match
   - remove empty changelists
 

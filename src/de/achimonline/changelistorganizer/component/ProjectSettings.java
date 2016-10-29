@@ -9,6 +9,7 @@ import java.util.List;
 
 public class ProjectSettings implements Serializable {
     private List<ChangelistOrganizerItem> changelistOrganizerItems = new ArrayList<ChangelistOrganizerItem>();
+    boolean onlyApplyItemsOnDefaultChangelistCheckBox = true;
     boolean stopApplyingItemsAfterFirstMatch = true;
     boolean removeEmptyChangelists = false;
 
@@ -28,6 +29,14 @@ public class ProjectSettings implements Serializable {
 
     public void setChangelistOrganizerItems(List<ChangelistOrganizerItem> changelistOrganizerItems) {
         this.changelistOrganizerItems = changelistOrganizerItems;
+    }
+
+    public boolean isOnlyApplyItemsOnDefaultChangelistCheckBox() {
+        return onlyApplyItemsOnDefaultChangelistCheckBox;
+    }
+
+    public void setOnlyApplyItemsOnDefaultChangelistCheckBox(boolean onlyApplyItemsOnDefaultChangelistCheckBox) {
+        this.onlyApplyItemsOnDefaultChangelistCheckBox = onlyApplyItemsOnDefaultChangelistCheckBox;
     }
 
     public boolean isStopApplyingItemsAfterFirstMatch() {

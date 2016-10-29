@@ -23,6 +23,11 @@ public class ChangelistOrganizer {
 
         // iterate all affected files
         for (VirtualFile virtualFile : changeListManager.getAffectedFiles()) {
+            // check if the settings tell us to only consider the default-changelist, and check if the file is in it
+            if (projectSettings.isOnlyApplyItemsOnDefaultChangelistCheckBox() && !changeListManager.getChangeList(virtualFile).isDefault()) {
+                continue;
+            }
+
             // apply every organizer-item on the file
             for (ChangelistOrganizerItem changelistOrganizerItem : projectSettings.getChangelistOrganizerItems()) {
                 // check if item is enabled

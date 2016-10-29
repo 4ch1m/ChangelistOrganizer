@@ -11,8 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -29,6 +27,7 @@ public class ProjectSettingsPane implements Disposable {
     private JButton deleteButton;
     private JButton upButton;
     private JButton downButton;
+    private JCheckBox onlyApplyItemsOnDefaultChangelistCheckBox;
     private JCheckBox stopApplyingItemsAfterFirstMatchCheckBox;
     private JCheckBox removeEmptyChangelistsCheckBox;
 
@@ -44,9 +43,11 @@ public class ProjectSettingsPane implements Disposable {
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                deleteButton.setEnabled(table.getSelectedRowCount() > 0);
-                upButton.setEnabled(table.getSelectedRow() > 0);
-                downButton.setEnabled(table.getSelectedRow() <=  table.getRowCount() - 2);
+                boolean aRowIsSelected = table.getSelectedRow() != -1;
+
+                deleteButton.setEnabled(aRowIsSelected && table.getSelectedRowCount() > 0);
+                upButton.setEnabled(aRowIsSelected && table.getSelectedRow() > 0);
+                downButton.setEnabled(aRowIsSelected && table.getSelectedRow() <=  table.getRowCount() - 2);
             }
         });
 
@@ -92,25 +93,23 @@ public class ProjectSettingsPane implements Disposable {
             }
         });
 
-        stopApplyingItemsAfterFirstMatchCheckBox.addChangeListener(new ChangeListener() {
+        ActionListener checkBoxActionListener = new ActionListener() {
             @Override
-            public void stateChanged(ChangeEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 modified = true;
             }
-        });
+        };
 
-        removeEmptyChangelistsCheckBox.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                modified = true;
-            }
-        });
+        onlyApplyItemsOnDefaultChangelistCheckBox.addActionListener(checkBoxActionListener);
+        stopApplyingItemsAfterFirstMatchCheckBox.addActionListener(checkBoxActionListener);
+        removeEmptyChangelistsCheckBox.addActionListener(checkBoxActionListener);
     }
 
     public void setData(ProjectSettings projectSettings) {
         tableModel.getData().clear();
         tableModel.getData().addAll(projectSettings.getChangelistOrganizerItems() == null ? new ArrayList<ChangelistOrganizerItem>() : projectSettings.getChangelistOrganizerItems());
 
+        onlyApplyItemsOnDefaultChangelistCheckBox.setSelected(projectSettings.isOnlyApplyItemsOnDefaultChangelistCheckBox());
         stopApplyingItemsAfterFirstMatchCheckBox.setSelected(projectSettings.isStopApplyingItemsAfterFirstMatch());
         removeEmptyChangelistsCheckBox.setSelected(projectSettings.isRemoveEmptyChangelists());
     }
@@ -125,6 +124,7 @@ public class ProjectSettingsPane implements Disposable {
         }
 
         projectSettings.setChangelistOrganizerItems(cleansedChangelistOrganizerItems);
+        projectSettings.setOnlyApplyItemsOnDefaultChangelistCheckBox(onlyApplyItemsOnDefaultChangelistCheckBox.isSelected());
         projectSettings.setStopApplyingItemsAfterFirstMatch(stopApplyingItemsAfterFirstMatchCheckBox.isSelected());
         projectSettings.setRemoveEmptyChangelists(removeEmptyChangelistsCheckBox.isSelected());
     }

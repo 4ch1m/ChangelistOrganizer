@@ -10,7 +10,7 @@
     <children>
       <scrollpane id="509c0" class="com.intellij.ui.components.JBScrollPane">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -19,10 +19,10 @@
             <constraints/>
             <properties>
               <autoCreateRowSorter value="false"/>
+              <preferredScrollableViewportSize width="450" height="350"/>
               <showHorizontalLines value="false"/>
               <showVerticalLines value="false"/>
               <striped value="true"/>
-              <updateSelectionOnSort value="false"/>
             </properties>
           </component>
         </children>
@@ -114,7 +114,7 @@
           </component>
         </children>
       </grid>
-      <grid id="684b6" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="684b6" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -122,9 +122,17 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="1d02a" class="javax.swing.JCheckBox" binding="stopApplyingItemsAfterFirstMatchCheckBox">
+          <component id="e248b" class="javax.swing.JCheckBox" binding="onlyApplyItemsOnDefaultChangelistCheckBox">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text resource-bundle="de/achimonline/changelistorganizer/changelistorganizer" key="settings.only.apply.on.default.changelist"/>
+            </properties>
+          </component>
+          <component id="1d02a" class="javax.swing.JCheckBox" binding="stopApplyingItemsAfterFirstMatchCheckBox">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text resource-bundle="de/achimonline/changelistorganizer/changelistorganizer" key="settings.stop.after.first.match"/>
@@ -132,7 +140,7 @@
           </component>
           <component id="845" class="javax.swing.JCheckBox" binding="removeEmptyChangelistsCheckBox">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text resource-bundle="de/achimonline/changelistorganizer/changelistorganizer" key="settings.remove.empty.changelists"/>
