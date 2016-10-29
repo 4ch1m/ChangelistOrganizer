@@ -8,14 +8,18 @@ import de.achimonline.changelistorganizer.ChangelistOrganizerStrings;
 import org.apache.commons.lang.ObjectUtils;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ProjectSettingsPane implements Disposable {
@@ -23,8 +27,14 @@ public class ProjectSettingsPane implements Disposable {
     private JBTable table;
     private JButton addButton;
     private JButton deleteButton;
+    private JButton upButton;
+    private JButton downButton;
+    private JCheckBox stopApplyingItemsAfterFirstMatchCheckBox;
+    private JCheckBox removeEmptyChangelistsCheckBox;
 
     private TableModel tableModel = new TableModel(new ArrayList<ChangelistOrganizerItem>());
+
+    private boolean modified = false;
 
     public ProjectSettingsPane() {
         super();
@@ -35,6 +45,8 @@ public class ProjectSettingsPane implements Disposable {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 deleteButton.setEnabled(table.getSelectedRowCount() > 0);
+                upButton.setEnabled(table.getSelectedRow() > 0);
+                downButton.setEnabled(table.getSelectedRow() <=  table.getRowCount() - 2);
             }
         });
 
@@ -57,11 +69,50 @@ public class ProjectSettingsPane implements Disposable {
                 tableModel.fireTableDataChanged();
             }
         });
+
+        upButton.setIcon(IconLoader.getIcon("/icons/up.png"));
+        upButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                Collections.swap(tableModel.getData(), selectedRow, --selectedRow);
+                tableModel.fireTableDataChanged();
+                table.setRowSelectionInterval(selectedRow, selectedRow);
+            }
+        });
+
+        downButton.setIcon(IconLoader.getIcon("/icons/down.png"));
+        downButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                Collections.swap(tableModel.getData(), selectedRow, ++selectedRow);
+                tableModel.fireTableDataChanged();
+                table.setRowSelectionInterval(selectedRow, selectedRow);
+            }
+        });
+
+        stopApplyingItemsAfterFirstMatchCheckBox.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                modified = true;
+            }
+        });
+
+        removeEmptyChangelistsCheckBox.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                modified = true;
+            }
+        });
     }
 
     public void setData(ProjectSettings projectSettings) {
         tableModel.getData().clear();
         tableModel.getData().addAll(projectSettings.getChangelistOrganizerItems() == null ? new ArrayList<ChangelistOrganizerItem>() : projectSettings.getChangelistOrganizerItems());
+
+        stopApplyingItemsAfterFirstMatchCheckBox.setSelected(projectSettings.isStopApplyingItemsAfterFirstMatch());
+        removeEmptyChangelistsCheckBox.setSelected(projectSettings.isRemoveEmptyChangelists());
     }
 
     public void storeSettings(ProjectSettings projectSettings) {
@@ -74,6 +125,8 @@ public class ProjectSettingsPane implements Disposable {
         }
 
         projectSettings.setChangelistOrganizerItems(cleansedChangelistOrganizerItems);
+        projectSettings.setStopApplyingItemsAfterFirstMatch(stopApplyingItemsAfterFirstMatchCheckBox.isSelected());
+        projectSettings.setRemoveEmptyChangelists(removeEmptyChangelistsCheckBox.isSelected());
     }
 
     @Override
@@ -85,7 +138,7 @@ public class ProjectSettingsPane implements Disposable {
     }
 
     public boolean isModified() {
-        return tableModel.isModified();
+        return modified || tableModel.isModified();
     }
 
     public static class TableModel extends AbstractTableModel

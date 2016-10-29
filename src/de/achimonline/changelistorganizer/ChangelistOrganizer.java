@@ -10,6 +10,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.ArrayUtil;
 import de.achimonline.changelistorganizer.component.ProjectSettings;
 
+import java.util.Iterator;
+
 public class ChangelistOrganizer {
     public synchronized static void organize(Project project) {
         if (project == null) {
@@ -47,9 +49,27 @@ public class ChangelistOrganizer {
                                     LocalChangeList localChangeList = changeListManager.addChangeList(changelistOrganizerItem.getChangeListName(), ChangelistOrganizerStrings.message("organize.changelist.comment"));
                                     changeListManager.moveChangesTo(localChangeList, ArrayUtil.toObjectArray(changeListManager.getChangesIn(virtualFile), Change.class));
                                 }
+
+                                // skip all following items if the setting says so
+                                if (projectSettings.isStopApplyingItemsAfterFirstMatch()) {
+                                    break;
+                                }
                             }
                         }
                     }
+                }
+            }
+        }
+
+        // remove empty changelists
+        if (projectSettings.isRemoveEmptyChangelists()) {
+            Iterator<LocalChangeList> changeListIterator = changeListManager.getChangeLists().iterator();
+
+            while (changeListIterator.hasNext()) {
+                LocalChangeList changeList = changeListIterator.next();
+
+                if (changeList.getChanges().isEmpty()) {
+                    changeListManager.removeChangeList(changeList);
                 }
             }
         }

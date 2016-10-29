@@ -13,7 +13,18 @@ Simply define your wanted changelists and assign files via a simple wildcard-pat
 ---
 ![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/screenshots/changelist-after.png)
 
+##Installation
+Use the IDE's built-in plugin system:
+
+<kbd>Preferences</kbd> &rarr; <kbd>Plugins</kbd> &rarr; <kbd>Browse repositories...</kbd> &rarr; <kbd>Search for "Changelist Organizer"</kbd> &rarr; <kbd>Install Plugin</kbd>
+
 ##Changelog
+#### **v1.1** (2016-10-29):
+* organizer-items can be ordered now
+* new settings:
+  - stop applying items on a file after first match
+  - remove empty changelists
+
 #### **v1.0** (2016-10-27):
 * initial release
 
