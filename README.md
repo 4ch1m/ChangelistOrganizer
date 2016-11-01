@@ -40,3 +40,8 @@ Developed by *Achim Seufert*
 Website: [achimonline.de](http://www.achimonline.de)
 
 eMail: [intellij@achimonline.de](mailto:intellij@achimonline.de)
+
+##License
+*Changelist Organizer* is licensed under the terms of the *GNU General Public License license* (GPL-3.0+).
+
+Read the file [LICENSE.txt](LICENSE.txt) for further details.
