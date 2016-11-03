@@ -21,6 +21,10 @@ Use the IDE's built-in plugin system:
 Or go to the [plugin page](https://plugins.jetbrains.com/plugin/9216?pr=idea) on the JetBrains-website, download the archive-file and install manually.
 
 ##Changelog
+#### **v1.2.1** (2016-11-03):
+* added unit-testing for source-code
+* minor code cosmetics
+
 #### **v1.2** (2016-10-30):
 * new feature/setting: apply organizer-items on current default-changelist only
 * bugfixes

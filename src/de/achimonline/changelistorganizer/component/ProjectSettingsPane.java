@@ -109,7 +109,7 @@ public class ProjectSettingsPane implements Disposable {
         tableModel.getData().clear();
         tableModel.getData().addAll(projectSettings.getChangelistOrganizerItems() == null ? new ArrayList<ChangelistOrganizerItem>() : projectSettings.getChangelistOrganizerItems());
 
-        onlyApplyItemsOnDefaultChangelistCheckBox.setSelected(projectSettings.isOnlyApplyItemsOnDefaultChangelistCheckBox());
+        onlyApplyItemsOnDefaultChangelistCheckBox.setSelected(projectSettings.isOnlyApplyItemsOnDefaultChangelist());
         stopApplyingItemsAfterFirstMatchCheckBox.setSelected(projectSettings.isStopApplyingItemsAfterFirstMatch());
         removeEmptyChangelistsCheckBox.setSelected(projectSettings.isRemoveEmptyChangelists());
     }
@@ -124,7 +124,7 @@ public class ProjectSettingsPane implements Disposable {
         }
 
         projectSettings.setChangelistOrganizerItems(cleansedChangelistOrganizerItems);
-        projectSettings.setOnlyApplyItemsOnDefaultChangelistCheckBox(onlyApplyItemsOnDefaultChangelistCheckBox.isSelected());
+        projectSettings.setOnlyApplyItemsOnDefaultChangelist(onlyApplyItemsOnDefaultChangelistCheckBox.isSelected());
         projectSettings.setStopApplyingItemsAfterFirstMatch(stopApplyingItemsAfterFirstMatchCheckBox.isSelected());
         projectSettings.setRemoveEmptyChangelists(removeEmptyChangelistsCheckBox.isSelected());
     }

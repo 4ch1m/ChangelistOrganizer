@@ -2,14 +2,19 @@
 
   <id>de.achimonline.changelistorganizer</id>
   <name>Changelist Organizer</name>
-  <version>1.2</version>
-  <vendor email="intellij@achimonline.de" url="http://changelistorganizer.achimonline.de">Changelist Organizer</vendor>
+  <version>1.2.1</version>
+  <vendor email="intellij@achimonline.de" url="https://plugins.jetbrains.com/space/index?pr=idea&lg=4ch1m">Achim Seufert</vendor>
 
   <description><![CDATA[
       Automatically organizes your modified files by moving them into predefined changelists.
     ]]></description>
 
   <change-notes><![CDATA[
+      <b>1.2.1</b>
+      <ul>
+        <li>added unit-testing for source-code</li>
+        <li>minor code cosmetics</li>
+      </ul>
       <b>1.2</b>
       <ul>
         <li>new feature/setting: apply organizer-items on current default-changelist only</li>
