@@ -1,26 +1,32 @@
 package de.achimonline.changelistorganizer;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vcs.changes.Change;
 import com.intellij.openapi.vcs.changes.ChangeListManager;
 import com.intellij.openapi.vcs.changes.LocalChangeList;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileSystem;
+import com.intellij.util.containers.EmptyIterator;
 import de.achimonline.changelistorganizer.component.ProjectSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
+import javax.swing.Icon;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,52 +35,61 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.never;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ProjectSettings.class, ChangeListManager.class})
+@PowerMockRunnerDelegate(Parameterized.class)
+@PrepareForTest({ProjectSettings.class, ChangeListManager.class, ChangelistOrganizerIcons.class, Messages.class})
 public class ChangelistOrganizerTest {
 
+    // *************************************************************************************
     private static final boolean ENABLED_1 = true;
     private static final String CHANGELIST_NAME_1 = "images";
     private static final String FILE_PATTERN_1 = "*.jp*g";
-    private static final String FILE_NAME_1 = "test.jpg";
-    private static final String FILE_PATH_1 =  "/" + FILE_NAME_1;
     private static final boolean CHECK_FULL_PATH_1 = false;
     private static final boolean CONFIRMATION_DIALOG_1 = false;
-
-    private static final boolean ENABLED_2 = false;
+    // ---
+    private static final String FILE_NAME_1 = "test.jpg";
+    private static final String FILE_PATH_1 =  "/" + FILE_NAME_1;
+    // *************************************************************************************
+    private static final boolean ENABLED_2 = true;
     private static final String CHANGELIST_NAME_2 = "config";
     private static final String FILE_PATTERN_2 = "*.xml";
-    private static final String FILE_NAME_2 = "build.xml";
-    private static final String FILE_PATH_2 = "/test/path/" + FILE_NAME_2;
     private static final boolean CHECK_FULL_PATH_2 = false;
     private static final boolean CONFIRMATION_DIALOG_2 = true;
-
+    // ---
+    private static final String FILE_NAME_2 = "build.xml";
+    private static final String FILE_PATH_2 = "/test/path/" + FILE_NAME_2;
+    // *************************************************************************************
     private static final boolean ENABLED_3 = true;
     private static final String CHANGELIST_NAME_3 = "images";
     private static final String FILE_PATTERN_3 = "*.p?g";
-    private static final String FILE_NAME_3 = "test.png";
-    private static final String FILE_PATH_3 = "/path/path/" + FILE_NAME_3;
     private static final boolean CHECK_FULL_PATH_3 = false;
     private static final boolean CONFIRMATION_DIALOG_3 = false;
-
+    // ---
+    private static final String FILE_NAME_3 = "test.png";
+    private static final String FILE_PATH_3 = "/path/path/" + FILE_NAME_3;
+    // *************************************************************************************
     private static final boolean ENABLED_4 = true;
     private static final String CHANGELIST_NAME_4 = "HTML-templates";
     private static final String FILE_PATTERN_4 = "*WEB-INF*.html";
-    private static final String FILE_NAME_4 = "test.html";
-    private static final String FILE_PATH_4 = "/test/path/WEB-INF/templates/" + FILE_NAME_4;
     private static final boolean CHECK_FULL_PATH_4 = true;
     private static final boolean CONFIRMATION_DIALOG_4 = false;
-
+    // ---
+    private static final String FILE_NAME_4 = "test.html";
+    private static final String FILE_PATH_4 = "/test/path/WEB-INF/templates/" + FILE_NAME_4;
+    // *************************************************************************************
     private static final boolean ENABLED_5 = true;
     private static final String CHANGELIST_NAME_5 = "resources";
     private static final String FILE_PATTERN_5 = "*/resources/*";
-    private static final String FILE_NAME_5 = "test.properties";
-    private static final String FILE_PATH_5 = "/test/resources/props/" + FILE_NAME_5;
     private static final boolean CHECK_FULL_PATH_5 = true;
     private static final boolean CONFIRMATION_DIALOG_5 = false;
+    // ---
+    private static final String FILE_NAME_5 = "test.properties";
+    private static final String FILE_PATH_5 = "/test/resources/props/" + FILE_NAME_5;
+    // *************************************************************************************
 
     @Mock
     private Project project;
@@ -85,12 +100,42 @@ public class ChangelistOrganizerTest {
     @Mock
     private LocalChangeList localChangeList;
 
+    @Mock
+    private List<LocalChangeList> localChangeLists;
+
+    @Parameterized.Parameter(value = 0)
+    public List<ChangelistOrganizerItem> changelistOrganizerItems;
+
+    @Parameterized.Parameter(value = 1)
+    public List<VirtualFile> virtualFiles;
+
+    @Parameterized.Parameter(value = 2)
+    public boolean allFilesOnDefaultChangelist;
+
+    @Parameterized.Parameter(value = 3)
+    public boolean stopApplyingItemsAfterFirstMatch;
+
+    @Parameterized.Parameter(value = 4)
+    public boolean onlyApplyItemsOnDefaultChangelist;
+
+    @Parameterized.Parameter(value = 5)
+    public boolean removeEmptyChangelists;
+
+    @Parameterized.Parameter(value = 6)
+    public int confirmationDialogResult;
+
+    @Parameterized.Parameter(value = 7)
+    public int expectedNumberOfCalls;
+
     @Before
     public void setUp() throws Exception {
         mockStatic(ProjectSettings.class);
         mockStatic(ChangeListManager.class);
+        mockStatic(ChangelistOrganizerIcons.class);
+        mockStatic(Messages.class);
 
         when(ChangeListManager.getInstance(project)).thenReturn(changeListManager);
+        when(ChangelistOrganizerIcons.get(anyString())).thenReturn(null);
         when(changeListManager.getChangeList(any(VirtualFile.class))).thenReturn(localChangeList);
         when(changeListManager.getChangeLists()).thenReturn(Arrays.asList(localChangeList));
         when(changeListManager.addChangeList(anyString(), anyString())).thenReturn(localChangeList);
@@ -99,77 +144,59 @@ public class ChangelistOrganizerTest {
 
     @Test
     public void testOrganize() throws Exception {
-        ProjectSettings projectSettings = buildProjectSettingsWithItems();
-        projectSettings.setStopApplyingItemsAfterFirstMatch(true);
-        projectSettings.setOnlyApplyItemsOnDefaultChangelist(true);
-        projectSettings.setRemoveEmptyChangelists(false);
-
-        List<VirtualFile> virtualFiles = buildVirtualFiles();
+        ProjectSettings projectSettings = new ProjectSettings();
+        projectSettings.setChangelistOrganizerItems(changelistOrganizerItems);
+        projectSettings.setStopApplyingItemsAfterFirstMatch(stopApplyingItemsAfterFirstMatch);
+        projectSettings.setOnlyApplyItemsOnDefaultChangelist(onlyApplyItemsOnDefaultChangelist);
+        projectSettings.setRemoveEmptyChangelists(removeEmptyChangelists);
 
         when(ProjectSettings.storedSettings(project)).thenReturn(projectSettings);
         when(changeListManager.getAffectedFiles()).thenReturn(virtualFiles);
-        when(localChangeList.isDefault()).thenReturn(true);
+        when(changeListManager.getChangeLists()).thenReturn(localChangeLists);
+        when(localChangeList.isDefault()).thenReturn(allFilesOnDefaultChangelist);
         when(localChangeList.getName()).thenReturn(UUID.randomUUID().toString());
+        when(localChangeLists.iterator()).thenReturn(EmptyIterator.<LocalChangeList>getInstance());
+        when(Messages.showOkCancelDialog(any(Project.class), anyString(), anyString(), anyString(), anyString(), any(Icon.class))).thenReturn(confirmationDialogResult);
 
         ChangelistOrganizer.organize(project);
 
-        verify(changeListManager, times(4)).moveChangesTo(any(LocalChangeList.class));
+        verify(changeListManager, times(expectedNumberOfCalls)).moveChangesTo(any(LocalChangeList.class));
+
+        if (removeEmptyChangelists) {
+            verify(localChangeLists).iterator();
+        } else {
+            verify(localChangeLists, never()).iterator();
+        }
     }
 
-    /*
-        TODO
+    private static ChangelistOrganizerItem buildChanglistOrganizerItem(boolean enabled, String changeListName, String filePattern, boolean checkFullPath, boolean confirmationDialog) {
+        ChangelistOrganizerItem changelistOrganizerItem = new ChangelistOrganizerItem();
+        changelistOrganizerItem.setEnabled(enabled);
+        changelistOrganizerItem.setChangeListName(changeListName);
+        changelistOrganizerItem.setFilePattern(filePattern);
+        changelistOrganizerItem.setCheckFullPath(checkFullPath);
+        changelistOrganizerItem.setConfirmationDialog(confirmationDialog);
 
-        improve/complete tests for ...
-
-        - global settings (stopApplyingItemsAfterFirstMatch, onlyApplyItemsOnDefaultChangelist, removeEmptyChangelists)
-        - "checkFullPath" and "showConfirmationDialog"
-        - general pattern matching
-        - etc.
-     */
-
-    private ProjectSettings buildProjectSettingsWithItems() {
-        ChangelistOrganizerItem changelistOrganizerItem1 = new ChangelistOrganizerItem();
-        changelistOrganizerItem1.setEnabled(ENABLED_1);
-        changelistOrganizerItem1.setChangeListName(CHANGELIST_NAME_1);
-        changelistOrganizerItem1.setFilePattern(FILE_PATTERN_1);
-        changelistOrganizerItem1.setCheckFullPath(CHECK_FULL_PATH_1);
-        changelistOrganizerItem1.setConfirmationDialog(CONFIRMATION_DIALOG_1);
-
-        ChangelistOrganizerItem changelistOrganizerItem2 = new ChangelistOrganizerItem();
-        changelistOrganizerItem2.setEnabled(ENABLED_2);
-        changelistOrganizerItem2.setChangeListName(CHANGELIST_NAME_2);
-        changelistOrganizerItem2.setFilePattern(FILE_PATTERN_2);
-        changelistOrganizerItem2.setCheckFullPath(CHECK_FULL_PATH_2);
-        changelistOrganizerItem2.setConfirmationDialog(CONFIRMATION_DIALOG_2);
-
-        ChangelistOrganizerItem changelistOrganizerItem3 = new ChangelistOrganizerItem();
-        changelistOrganizerItem3.setEnabled(ENABLED_3);
-        changelistOrganizerItem3.setChangeListName(CHANGELIST_NAME_3);
-        changelistOrganizerItem3.setFilePattern(FILE_PATTERN_3);
-        changelistOrganizerItem3.setCheckFullPath(CHECK_FULL_PATH_3);
-        changelistOrganizerItem3.setConfirmationDialog(CONFIRMATION_DIALOG_3);
-
-        ChangelistOrganizerItem changelistOrganizerItem4 = new ChangelistOrganizerItem();
-        changelistOrganizerItem4.setEnabled(ENABLED_4);
-        changelistOrganizerItem4.setChangeListName(CHANGELIST_NAME_4);
-        changelistOrganizerItem4.setFilePattern(FILE_PATTERN_4);
-        changelistOrganizerItem4.setCheckFullPath(CHECK_FULL_PATH_4);
-        changelistOrganizerItem4.setConfirmationDialog(CONFIRMATION_DIALOG_4);
-
-        ChangelistOrganizerItem changelistOrganizerItem5 = new ChangelistOrganizerItem();
-        changelistOrganizerItem5.setEnabled(ENABLED_5);
-        changelistOrganizerItem5.setChangeListName(CHANGELIST_NAME_5);
-        changelistOrganizerItem5.setFilePattern(FILE_PATTERN_5);
-        changelistOrganizerItem5.setCheckFullPath(CHECK_FULL_PATH_5);
-        changelistOrganizerItem5.setConfirmationDialog(CONFIRMATION_DIALOG_5);
-
-        ProjectSettings projectSettings = new ProjectSettings();
-        projectSettings.setChangelistOrganizerItems(Arrays.asList(changelistOrganizerItem1, changelistOrganizerItem2, changelistOrganizerItem3, changelistOrganizerItem4, changelistOrganizerItem5));
-
-        return projectSettings;
+        return changelistOrganizerItem;
     }
 
-    private List<VirtualFile> buildVirtualFiles() {
+    private static List<ChangelistOrganizerItem> buildChangelistOrganizerItems() {
+        return Arrays.asList(buildChanglistOrganizerItem(ENABLED_1, CHANGELIST_NAME_1, FILE_PATTERN_1, CHECK_FULL_PATH_1, CONFIRMATION_DIALOG_1),
+                             buildChanglistOrganizerItem(ENABLED_2, CHANGELIST_NAME_2, FILE_PATTERN_2, CHECK_FULL_PATH_2, CONFIRMATION_DIALOG_2),
+                             buildChanglistOrganizerItem(ENABLED_3, CHANGELIST_NAME_3, FILE_PATTERN_3, CHECK_FULL_PATH_3, CONFIRMATION_DIALOG_3),
+                             buildChanglistOrganizerItem(ENABLED_4, CHANGELIST_NAME_4, FILE_PATTERN_4, CHECK_FULL_PATH_4, CONFIRMATION_DIALOG_4),
+                             buildChanglistOrganizerItem(ENABLED_5, CHANGELIST_NAME_5, FILE_PATTERN_5, CHECK_FULL_PATH_5, CONFIRMATION_DIALOG_5));
+    }
+
+    private static List<ChangelistOrganizerItem> buildChangelistOrganizerItems_twoItemsDisabled() {
+        List<ChangelistOrganizerItem> changelistOrganizerItems = buildChangelistOrganizerItems();
+        changelistOrganizerItems.get(0).setEnabled(false);
+        changelistOrganizerItems.get(2).setEnabled(false);
+
+        return changelistOrganizerItems;
+    }
+
+    private static List<VirtualFile> buildVirtualFiles() {
         List<VirtualFile> virtualFiles = new ArrayList<VirtualFile>();
         virtualFiles.add(createVirtualFile(FILE_NAME_1, FILE_PATH_1));
         virtualFiles.add(createVirtualFile(FILE_NAME_2, FILE_PATH_2));
@@ -180,7 +207,7 @@ public class ChangelistOrganizerTest {
         return virtualFiles;
     }
 
-    private VirtualFile createVirtualFile(final String name, final String path) {
+    private static VirtualFile createVirtualFile(final String name, final String path) {
         return new VirtualFile() {
 
             @NotNull
@@ -259,4 +286,17 @@ public class ChangelistOrganizerTest {
         };
     }
 
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                // changelistOrganizerItems,                         virtualFiles,        allFilesOnDefaultChangelist, stopApplyingItemsAfterFirstMatch, onlyApplyItemsOnDefaultChangelist, removeEmptyChangelists, confirmationDialogResult, expectedNumberOfCalls
+                {  buildChangelistOrganizerItems(),                  buildVirtualFiles(), true,                        true,                             true,                              true,                   Messages.OK,              5 },
+                {  buildChangelistOrganizerItems(),                  buildVirtualFiles(), true,                        true,                             true,                              false,                  Messages.OK,              5 },
+                {  buildChangelistOrganizerItems(),                  buildVirtualFiles(), false,                       true,                             true,                              true,                   Messages.OK,              0 },
+                {  buildChangelistOrganizerItems(),                  buildVirtualFiles(), false,                       true,                             false,                             true,                   Messages.OK,              5 },
+                {  buildChangelistOrganizerItems(),                  buildVirtualFiles(), true,                        false,                            true,                              true,                   Messages.OK,              6 },
+                {  buildChangelistOrganizerItems(),                  buildVirtualFiles(), true,                        true,                             true,                              true,                   Messages.CANCEL,          4 },
+                {  buildChangelistOrganizerItems_twoItemsDisabled(), buildVirtualFiles(), true,                        true,                             true,                              true,                   Messages.OK,              3 }
+        });
+    }
 }

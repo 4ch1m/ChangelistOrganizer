@@ -2,7 +2,7 @@
 
   <id>de.achimonline.changelistorganizer</id>
   <name>Changelist Organizer</name>
-  <version>1.2.1</version>
+  <version>1.3</version>
   <vendor email="intellij@achimonline.de" url="https://plugins.jetbrains.com/space/index?pr=idea&amp;lg=4ch1m">Achim Seufert</vendor>
 
   <description><![CDATA[
@@ -10,6 +10,11 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <b>1.3</b>
+      <ul>
+        <li>minor refactorings</li>
+        <li>improved/enhanced unit-tests</li>
+      </ul>
       <b>1.2.1</b>
       <ul>
         <li>added unit-testing for source-code</li>

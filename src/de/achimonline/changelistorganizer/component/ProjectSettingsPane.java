@@ -1,8 +1,8 @@
 package de.achimonline.changelistorganizer.component;
 
 import com.intellij.openapi.Disposable;
-import com.intellij.openapi.util.IconLoader;
 import com.intellij.ui.table.JBTable;
+import de.achimonline.changelistorganizer.ChangelistOrganizerIcons;
 import de.achimonline.changelistorganizer.ChangelistOrganizerItem;
 import de.achimonline.changelistorganizer.ChangelistOrganizerStrings;
 import org.apache.commons.lang.ObjectUtils;
@@ -51,7 +51,7 @@ public class ProjectSettingsPane implements Disposable {
             }
         });
 
-        addButton.setIcon(IconLoader.getIcon("/icons/add.png"));
+        addButton.setIcon(ChangelistOrganizerIcons.get("add.png"));
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,7 +62,7 @@ public class ProjectSettingsPane implements Disposable {
             }
         });
 
-        deleteButton.setIcon(IconLoader.getIcon("/icons/delete.png"));
+        deleteButton.setIcon(ChangelistOrganizerIcons.get("delete.png"));
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,7 +71,7 @@ public class ProjectSettingsPane implements Disposable {
             }
         });
 
-        upButton.setIcon(IconLoader.getIcon("/icons/up.png"));
+        upButton.setIcon(ChangelistOrganizerIcons.get("up.png"));
         upButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,7 +82,7 @@ public class ProjectSettingsPane implements Disposable {
             }
         });
 
-        downButton.setIcon(IconLoader.getIcon("/icons/down.png"));
+        downButton.setIcon(ChangelistOrganizerIcons.get("down.png"));
         downButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
