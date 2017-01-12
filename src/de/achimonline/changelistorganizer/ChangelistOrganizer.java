@@ -72,7 +72,7 @@ public class ChangelistOrganizer {
             while (changeListIterator.hasNext()) {
                 LocalChangeList changeList = changeListIterator.next();
 
-                if (changeList.getChanges().isEmpty()) {
+                if (!changeList.isDefault() && changeList.getChanges().isEmpty()) {
                     changeListManager.removeChangeList(changeList);
                 }
             }
