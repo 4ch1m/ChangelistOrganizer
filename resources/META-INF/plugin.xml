@@ -14,6 +14,7 @@
       <ul>
         <li>minor refactorings</li>
         <li>improved/enhanced unit-tests</li>
+        <li>small bugfix (don't try to delete an empty changelist if it's the default-changelist)</li>
       </ul>
       <b>1.2.1</b>
       <ul>
