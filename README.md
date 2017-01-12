@@ -23,7 +23,7 @@ Or go to the [plugin page](https://plugins.jetbrains.com/plugin/9216?pr=idea) on
 ##Changelog
 #### **v1.3** (2017-01-12):
 * minor code refactorings
-* improved unit-tests
+* improved/enhanced unit-tests
 * small bugfix (don't try to delete an empty changelist if it's the default-changelist)
 
 #### **v1.2.1** (2016-11-03):
