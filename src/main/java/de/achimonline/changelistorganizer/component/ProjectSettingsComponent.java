@@ -4,16 +4,10 @@ import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StoragePathMacros;
-import com.intellij.openapi.components.StorageScheme;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@State(
-  name = "ChangelistOrganizerProjectSettings",
-  storages = { @Storage(id = "default", file = StoragePathMacros.PROJECT_FILE),
-               @Storage(id = "dir",     file = StoragePathMacros.PROJECT_CONFIG_DIR + "/changelistorganizer_project.xml", scheme = StorageScheme.DIRECTORY_BASED)}
-)
+@State(name = "ChangelistOrganizerProjectSettings", storages = {@Storage("changelistorganizer_project.xml")})
 public class ProjectSettingsComponent implements PersistentStateComponent<ProjectSettings>, ProjectComponent {
     private ProjectSettings projectSettings = new ProjectSettings();
 
