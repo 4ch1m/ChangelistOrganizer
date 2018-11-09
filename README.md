@@ -24,7 +24,7 @@ Use the IDE's built-in plugin system:
 Or go to the [plugin page](https://plugins.jetbrains.com/plugin/9216?pr=idea) on the JetBrains-website, download the archive-file and install manually.
 
 ##  Changelog
-#### **v1.4** (2018-11-??):
+#### **v1.4** (2018-11-09):
 * migration to Gradle-based plugin/project
 * minor code changes/updates
 
