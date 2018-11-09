@@ -1,4 +1,4 @@
-![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/resources/icons/icon_64x64.png)
+![alt tag](https://raw.githubusercontent.com/4ch1m/ChangelistOrganizer/master/src/main/resources/icons/icon_64x64.png)
 # Changelist Organizer
 Automated Changelist Organizing for IntelliJ
 
