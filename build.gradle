@@ -18,9 +18,14 @@ dependencies {
 
 intellij {
     version '2018.2.5'
+    pluginName 'Changelist Organizer'
+    updateSinceUntilBuild false
 }
 
 publishPlugin {
     username intellijPublishUsername
     password intellijPublishPassword
 }
+
+group 'de.achimonline'
+version 1.4
