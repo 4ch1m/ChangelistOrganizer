@@ -18,7 +18,7 @@ dependencies {
 
 intellij {
     version '2018.2.5'
-    pluginName 'Changelist Organizer'
+    pluginName 'changelistorganizer'
     updateSinceUntilBuild false
 }
 
@@ -28,4 +28,4 @@ publishPlugin {
 }
 
 group 'de.achimonline'
-version 1.4
+version 1.5

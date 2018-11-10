@@ -1,8 +1,7 @@
-<idea-plugin version="2">
+<idea-plugin>
 
   <id>de.achimonline.changelistorganizer</id>
   <name>Changelist Organizer</name>
-  <version>1.4</version>
   <vendor email="intellij@achimonline.de" url="https://plugins.jetbrains.com/space/index?pr=idea&amp;lg=4ch1m">Achim Seufert</vendor>
 
   <description><![CDATA[
@@ -10,6 +9,10 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <b>1.5</b>
+      <ul>
+        <li>added 'vcs' module-dependency (improving product compatiblity)</li>
+      </ul>
       <b>1.4</b>
       <ul>
         <li>migration to Gradle-based plugin/project</li>
@@ -45,6 +48,8 @@
 
   <idea-version since-build="162.0"/>
 
+  <depends>com.intellij.modules.vcs</depends>
+  
   <extensions defaultExtensionNs="com.intellij">
     <projectConfigurable id="ChangelistOrganizer"
                          groupId="tools"
