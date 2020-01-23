@@ -57,7 +57,6 @@ public class ProjectSettingsConfigurable implements Configurable {
     @Override
     public void reset() {
         projectSettingsPane.setData(ProjectSettings.storedSettings(project));
-
     }
 
     @Override
