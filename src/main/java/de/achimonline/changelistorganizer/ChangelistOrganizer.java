@@ -36,7 +36,7 @@ public class ChangelistOrganizer {
                         // check if target changelist-name is valid
                         if (changelistOrganizerItem.getChangeListName() != null && !changelistOrganizerItem.getChangeListName().trim().isEmpty()) {
                             // build regex-pattern from user-input-filepattern
-                            String filenamePatternRegEx = changelistOrganizerItem.getFilePattern().replace("?", ".?").replace("*", ".*");
+                            String filenamePatternRegEx = changelistOrganizerItem.getFilePattern().replace(".", "\\.").replace("?", ".?").replace("*", ".*");
                             String compareValue = changelistOrganizerItem.isCheckFullPath() ? virtualFile.getPath() : virtualFile.getName();
 
                             // check if it matches
