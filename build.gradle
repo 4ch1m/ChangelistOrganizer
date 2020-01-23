@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.3.12'
+    id 'org.jetbrains.intellij' version '0.4.15'
 }
 
 sourceCompatibility = 1.8
@@ -23,8 +23,7 @@ intellij {
 }
 
 publishPlugin {
-    username intellijPublishUsername
-    password intellijPublishPassword
+    token intellijPublishToken
 }
 
 group 'de.achimonline'
