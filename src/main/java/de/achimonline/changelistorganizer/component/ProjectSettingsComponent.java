@@ -18,7 +18,7 @@ public class ProjectSettingsComponent implements PersistentStateComponent<Projec
     }
 
     @Override
-    public void loadState(ProjectSettings projectSettings) {
+    public void loadState(@NotNull ProjectSettings projectSettings) {
         this.projectSettings = projectSettings;
     }
 

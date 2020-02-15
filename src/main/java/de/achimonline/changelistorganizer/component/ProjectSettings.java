@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectSettings implements Serializable {
-    private List<ChangelistOrganizerItem> changelistOrganizerItems = new ArrayList<ChangelistOrganizerItem>();
+    private List<ChangelistOrganizerItem> changelistOrganizerItems = new ArrayList<>();
     boolean onlyApplyItemsOnDefaultChangelist = true;
     boolean stopApplyingItemsAfterFirstMatch = true;
     boolean removeEmptyChangelists = false;

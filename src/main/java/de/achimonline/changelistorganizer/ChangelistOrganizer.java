@@ -9,8 +9,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.ArrayUtil;
 import de.achimonline.changelistorganizer.component.ProjectSettings;
 
-import java.util.Iterator;
-
 public class ChangelistOrganizer {
     public synchronized static void organize(Project project) {
         if (project == null) {
@@ -67,11 +65,8 @@ public class ChangelistOrganizer {
 
         // remove empty changelists
         if (projectSettings.isRemoveEmptyChangelists()) {
-            Iterator<LocalChangeList> changeListIterator = changeListManager.getChangeLists().iterator();
 
-            while (changeListIterator.hasNext()) {
-                LocalChangeList changeList = changeListIterator.next();
-
+            for (LocalChangeList changeList : changeListManager.getChangeLists()) {
                 if (!changeList.isDefault() && changeList.getChanges().isEmpty()) {
                     changeListManager.removeChangeList(changeList);
                 }

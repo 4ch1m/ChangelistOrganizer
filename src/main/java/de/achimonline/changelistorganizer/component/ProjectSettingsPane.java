@@ -11,10 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +28,7 @@ public class ProjectSettingsPane implements Disposable {
     private JCheckBox stopApplyingItemsAfterFirstMatchCheckBox;
     private JCheckBox removeEmptyChangelistsCheckBox;
 
-    private TableModel tableModel = new TableModel(new ArrayList<ChangelistOrganizerItem>());
+    private final TableModel tableModel = new TableModel(new ArrayList<>());
 
     private boolean modified = false;
 
@@ -40,65 +37,45 @@ public class ProjectSettingsPane implements Disposable {
 
         table.setModel(tableModel);
         table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                boolean aRowIsSelected = table.getSelectedRow() != -1;
+        table.getSelectionModel().addListSelectionListener(e -> {
+            boolean aRowIsSelected = table.getSelectedRow() != -1;
 
-                deleteButton.setEnabled(aRowIsSelected && table.getSelectedRowCount() > 0);
-                upButton.setEnabled(aRowIsSelected && table.getSelectedRow() > 0);
-                downButton.setEnabled(aRowIsSelected && table.getSelectedRow() <=  table.getRowCount() - 2);
-            }
+            deleteButton.setEnabled(aRowIsSelected && table.getSelectedRowCount() > 0);
+            upButton.setEnabled(aRowIsSelected && table.getSelectedRow() > 0);
+            downButton.setEnabled(aRowIsSelected && table.getSelectedRow() <=  table.getRowCount() - 2);
         });
 
         addButton.setIcon(ChangelistOrganizerIcons.get("add.png"));
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!tableAlreadyContainsEmptyItem()) {
-                    tableModel.getData().add(new ChangelistOrganizerItem());
-                    tableModel.fireTableDataChanged();
-                }
+        addButton.addActionListener(e -> {
+            if (!tableAlreadyContainsEmptyItem()) {
+                tableModel.getData().add(new ChangelistOrganizerItem());
+                tableModel.fireTableDataChanged();
             }
         });
 
         deleteButton.setIcon(ChangelistOrganizerIcons.get("delete.png"));
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tableModel.getData().remove(table.getSelectedRow());
-                tableModel.fireTableDataChanged();
-            }
+        deleteButton.addActionListener(e -> {
+            tableModel.getData().remove(table.getSelectedRow());
+            tableModel.fireTableDataChanged();
         });
 
         upButton.setIcon(ChangelistOrganizerIcons.get("up.png"));
-        upButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                Collections.swap(tableModel.getData(), selectedRow, --selectedRow);
-                tableModel.fireTableDataChanged();
-                table.setRowSelectionInterval(selectedRow, selectedRow);
-            }
+        upButton.addActionListener(e -> {
+            int selectedRow = table.getSelectedRow();
+            Collections.swap(tableModel.getData(), selectedRow, --selectedRow);
+            tableModel.fireTableDataChanged();
+            table.setRowSelectionInterval(selectedRow, selectedRow);
         });
 
         downButton.setIcon(ChangelistOrganizerIcons.get("down.png"));
-        downButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                Collections.swap(tableModel.getData(), selectedRow, ++selectedRow);
-                tableModel.fireTableDataChanged();
-                table.setRowSelectionInterval(selectedRow, selectedRow);
-            }
+        downButton.addActionListener(e -> {
+            int selectedRow = table.getSelectedRow();
+            Collections.swap(tableModel.getData(), selectedRow, ++selectedRow);
+            tableModel.fireTableDataChanged();
+            table.setRowSelectionInterval(selectedRow, selectedRow);
         });
 
-        ActionListener checkBoxActionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modified = true;
-            }
-        };
+        ActionListener checkBoxActionListener = e -> modified = true;
 
         onlyApplyItemsOnDefaultChangelistCheckBox.addActionListener(checkBoxActionListener);
         stopApplyingItemsAfterFirstMatchCheckBox.addActionListener(checkBoxActionListener);
@@ -107,7 +84,7 @@ public class ProjectSettingsPane implements Disposable {
 
     public void setData(ProjectSettings projectSettings) {
         tableModel.getData().clear();
-        tableModel.getData().addAll(projectSettings.getChangelistOrganizerItems() == null ? new ArrayList<ChangelistOrganizerItem>() : projectSettings.getChangelistOrganizerItems());
+        tableModel.getData().addAll(projectSettings.getChangelistOrganizerItems() == null ? new ArrayList<>() : projectSettings.getChangelistOrganizerItems());
 
         onlyApplyItemsOnDefaultChangelistCheckBox.setSelected(projectSettings.isOnlyApplyItemsOnDefaultChangelist());
         stopApplyingItemsAfterFirstMatchCheckBox.setSelected(projectSettings.isStopApplyingItemsAfterFirstMatch());
@@ -115,7 +92,7 @@ public class ProjectSettingsPane implements Disposable {
     }
 
     public void storeSettings(ProjectSettings projectSettings) {
-        List<ChangelistOrganizerItem> cleansedChangelistOrganizerItems = new ArrayList<ChangelistOrganizerItem>();
+        List<ChangelistOrganizerItem> cleansedChangelistOrganizerItems = new ArrayList<>();
 
         for (ChangelistOrganizerItem changelistOrganizerItem : tableModel.getData()) {
             if (changelistOrganizerItem.getChangeListName() != null && !changelistOrganizerItem.getChangeListName().trim().isEmpty()) {
@@ -149,7 +126,7 @@ public class ProjectSettingsPane implements Disposable {
                                                             ChangelistOrganizerStrings.message("settings.table.column.check.full.path"),
                                                             ChangelistOrganizerStrings.message("settings.table.column.confirmation.dialog") };
 
-        private java.util.List<ChangelistOrganizerItem> data = new ArrayList<ChangelistOrganizerItem>();
+        private final java.util.List<ChangelistOrganizerItem> data = new ArrayList<>();
         private boolean modified = false;
 
         public TableModel(List<ChangelistOrganizerItem> data) {
