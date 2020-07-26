@@ -7,7 +7,7 @@ import com.intellij.openapi.vcs.changes.ChangeListManager;
 import com.intellij.openapi.vcs.changes.LocalChangeList;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.ArrayUtil;
-import de.achimonline.changelistorganizer.component.ProjectSettings;
+import de.achimonline.changelistorganizer.settings.ProjectSettings;
 
 public class ChangelistOrganizer {
     public synchronized static void organize(Project project) {
@@ -45,6 +45,8 @@ public class ChangelistOrganizer {
                                 if (changelistOrganizerItem.isConfirmationDialog()) {
                                     // show the confirmation-dialog and set the flag accordingly
                                     performMove = Messages.showOkCancelDialog(project, ChangelistOrganizerStrings.message("organize.confirmation.dialog.message", virtualFile.getName(), changelistOrganizerItem.getChangeListName()), ChangelistOrganizerStrings.message("organize.confirmation.dialog.title"), Messages.OK_BUTTON, Messages.CANCEL_BUTTON, ChangelistOrganizerIcons.get("icon_32x32.png")) == Messages.OK;
+// TODO API-deprecation - exchange the line above with this one:
+//                                    performMove = Messages.showOkCancelDialog(project, ChangelistOrganizerStrings.message("organize.confirmation.dialog.message", virtualFile.getName(), changelistOrganizerItem.getChangeListName()), ChangelistOrganizerStrings.message("organize.confirmation.dialog.title"), Messages.getCancelButton(), Messages.getCancelButton(), ChangelistOrganizerIcons.get("icon_32x32.png")) == Messages.OK;
                                 }
 
                                 if (performMove) {
