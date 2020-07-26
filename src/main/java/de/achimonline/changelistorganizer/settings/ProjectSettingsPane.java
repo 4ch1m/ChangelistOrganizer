@@ -1,4 +1,4 @@
-package de.achimonline.changelistorganizer.component;
+package de.achimonline.changelistorganizer.settings;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.ui.table.JBTable;

@@ -1,4 +1,4 @@
-package de.achimonline.changelistorganizer.component;
+package de.achimonline.changelistorganizer.settings;
 
 import com.intellij.openapi.project.Project;
 import de.achimonline.changelistorganizer.ChangelistOrganizerItem;
@@ -14,13 +14,13 @@ public class ProjectSettings implements Serializable {
     boolean removeEmptyChangelists = false;
 
     public static ProjectSettings storedSettings(Project project) {
-        ProjectSettingsComponent projectSettingsComponent = project.getComponent(ProjectSettingsComponent.class);
+        ProjectSettingsService projectSettingsService = project.getService(ProjectSettingsService.class);
 
-        if (projectSettingsComponent == null) {
+        if (projectSettingsService == null) {
             return new ProjectSettings();
         }
 
-        return projectSettingsComponent.getState();
+        return projectSettingsService.getState();
     }
 
     public List<ChangelistOrganizerItem> getChangelistOrganizerItems() {
