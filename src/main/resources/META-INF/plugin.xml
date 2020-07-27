@@ -12,7 +12,8 @@
       <b>1.7</b>
       <ul>
         <li>refactorings to get rid of deprecated API-calls/-usage</li>
-        <li>other minor code improvements</li>
+        <li>raised min-version of compatibility to 201 (202013)</li>
+	    <li>other minor code improvements</li>
         <li>Gradle-wrapper update</li>
       </ul>
       <b>1.6</b>
