@@ -9,6 +9,10 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <b>1.8</b>
+      <ul>
+        <li>new feature: automatically organize upon additions to changelist</li>
+      </ul>
       <b>1.7</b>
       <ul>
         <li>refactorings to get rid of deprecated API-calls/-usage</li>
@@ -78,5 +82,9 @@
       <add-to-group group-id="ChangesViewPopupMenu" anchor="last"/>
     </action>
   </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <postStartupActivity implementation="de.achimonline.changelistorganizer.ChangelistOrganizerListener"/>
+  </extensions>
 
 </idea-plugin>

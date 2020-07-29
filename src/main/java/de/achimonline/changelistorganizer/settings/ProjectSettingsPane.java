@@ -27,6 +27,7 @@ public class ProjectSettingsPane implements Disposable {
     private JCheckBox onlyApplyItemsOnDefaultChangelistCheckBox;
     private JCheckBox stopApplyingItemsAfterFirstMatchCheckBox;
     private JCheckBox removeEmptyChangelistsCheckBox;
+    private JCheckBox automaticallyOrganizeCheckBox;
 
     private final TableModel tableModel = new TableModel(new ArrayList<>());
 
@@ -80,6 +81,7 @@ public class ProjectSettingsPane implements Disposable {
         onlyApplyItemsOnDefaultChangelistCheckBox.addActionListener(checkBoxActionListener);
         stopApplyingItemsAfterFirstMatchCheckBox.addActionListener(checkBoxActionListener);
         removeEmptyChangelistsCheckBox.addActionListener(checkBoxActionListener);
+        automaticallyOrganizeCheckBox.addActionListener(checkBoxActionListener);
     }
 
     public void setData(ProjectSettings projectSettings) {
@@ -89,6 +91,7 @@ public class ProjectSettingsPane implements Disposable {
         onlyApplyItemsOnDefaultChangelistCheckBox.setSelected(projectSettings.isOnlyApplyItemsOnDefaultChangelist());
         stopApplyingItemsAfterFirstMatchCheckBox.setSelected(projectSettings.isStopApplyingItemsAfterFirstMatch());
         removeEmptyChangelistsCheckBox.setSelected(projectSettings.isRemoveEmptyChangelists());
+        automaticallyOrganizeCheckBox.setSelected(projectSettings.isAutomaticallyOrganize());
     }
 
     public void storeSettings(ProjectSettings projectSettings) {
@@ -104,6 +107,7 @@ public class ProjectSettingsPane implements Disposable {
         projectSettings.setOnlyApplyItemsOnDefaultChangelist(onlyApplyItemsOnDefaultChangelistCheckBox.isSelected());
         projectSettings.setStopApplyingItemsAfterFirstMatch(stopApplyingItemsAfterFirstMatchCheckBox.isSelected());
         projectSettings.setRemoveEmptyChangelists(removeEmptyChangelistsCheckBox.isSelected());
+        projectSettings.setAutomaticallyOrganize(automaticallyOrganizeCheckBox.isSelected());
     }
 
     @Override
