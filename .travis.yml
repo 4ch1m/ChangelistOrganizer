@@ -2,3 +2,6 @@ language: java
 jdk: oraclejdk11
 install: ./gradlew assemble -PintellijPublishToken
 script: ./gradlew check -PintellijPublishToken
+branches:
+  except:
+    - development
