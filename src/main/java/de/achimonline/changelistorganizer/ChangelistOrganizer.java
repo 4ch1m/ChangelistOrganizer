@@ -44,9 +44,7 @@ public class ChangelistOrganizer {
                                 // check if we need to show a confirmation-dialog
                                 if (changelistOrganizerItem.isConfirmationDialog()) {
                                     // show the confirmation-dialog and set the flag accordingly
-                                    performMove = Messages.showOkCancelDialog(project, ChangelistOrganizerStrings.message("organize.confirmation.dialog.message", virtualFile.getName(), changelistOrganizerItem.getChangeListName()), ChangelistOrganizerStrings.message("organize.confirmation.dialog.title"), Messages.OK_BUTTON, Messages.CANCEL_BUTTON, ChangelistOrganizerIcons.get("icon_32x32.png")) == Messages.OK;
-// TODO API-deprecation - exchange the line above with this one:
-//                                    performMove = Messages.showOkCancelDialog(project, ChangelistOrganizerStrings.message("organize.confirmation.dialog.message", virtualFile.getName(), changelistOrganizerItem.getChangeListName()), ChangelistOrganizerStrings.message("organize.confirmation.dialog.title"), Messages.getCancelButton(), Messages.getCancelButton(), ChangelistOrganizerIcons.get("icon_32x32.png")) == Messages.OK;
+                                    performMove = Messages.showOkCancelDialog(project, ChangelistOrganizerStrings.message("organize.confirmation.dialog.message", virtualFile.getName(), changelistOrganizerItem.getChangeListName()), ChangelistOrganizerStrings.message("organize.confirmation.dialog.title"), Messages.getOkButton(), Messages.getCancelButton(), ChangelistOrganizerIcons.get("icon_32x32.png")) == Messages.OK;
                                 }
 
                                 if (performMove) {

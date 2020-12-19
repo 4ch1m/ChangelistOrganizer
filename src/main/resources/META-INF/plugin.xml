@@ -9,6 +9,12 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <b>1.9</b>
+      <ul>
+        <li>updated code, due to API-deprecation warnings</li>
+        <li>upgraded dependencies</li>
+        <li>Gradle-wrapper update</li>
+      </ul>
       <b>1.8</b>
       <ul>
         <li>new feature: automatically organize upon additions to changelist</li>
@@ -60,8 +66,6 @@
       </ul>
     ]]>
   </change-notes>
-
-  <idea-version since-build="201.0"/>
 
   <depends>com.intellij.modules.vcs</depends>
   
