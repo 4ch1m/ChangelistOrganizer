@@ -2,9 +2,6 @@
 # Changelist Organizer
 Automated Changelist Organizing for IntelliJ
 
-##### Build Status
-[![Build Status](https://travis-ci.org/4ch1m/ChangelistOrganizer.svg?branch=master)](https://travis-ci.org/4ch1m/ChangelistOrganizer)
-
 ## About
 This IntelliJ-plugin can help you to organize your changelist with just one click.
 Simply define your wanted changelists and assign files via a simple wildcard-pattern.
