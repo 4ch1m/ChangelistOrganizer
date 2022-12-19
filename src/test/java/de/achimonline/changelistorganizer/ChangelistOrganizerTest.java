@@ -7,7 +7,6 @@ import com.intellij.openapi.vcs.changes.ChangeListManager;
 import com.intellij.openapi.vcs.changes.LocalChangeList;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileSystem;
-import com.intellij.util.containers.EmptyIterator;
 import de.achimonline.changelistorganizer.settings.ProjectSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -157,7 +156,7 @@ public class ChangelistOrganizerTest {
         when(changeListManager.getChangeLists()).thenReturn(localChangeLists);
         when(localChangeList.isDefault()).thenReturn(allFilesOnDefaultChangelist);
         when(localChangeList.getName()).thenReturn(UUID.randomUUID().toString());
-        when(localChangeLists.iterator()).thenReturn(EmptyIterator.getInstance());
+        when(localChangeLists.iterator()).thenReturn(Collections.emptyIterator());
         when(Messages.showOkCancelDialog(any(Project.class), anyString(), anyString(), anyString(), anyString(), any(Icon.class))).thenReturn(confirmationDialogResult);
 
         ChangelistOrganizer.organize(project);

@@ -1,6 +1,4 @@
 .idea/
 *.iml
-releases
 .gradle
 build
-out

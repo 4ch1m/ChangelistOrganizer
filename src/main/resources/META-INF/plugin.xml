@@ -2,70 +2,16 @@
 
   <id>de.achimonline.changelistorganizer</id>
   <name>Changelist Organizer</name>
-  <vendor email="intellij@achimonline.de" url="https://plugins.jetbrains.com/space/index?pr=idea&amp;lg=4ch1m">Achim Seufert</vendor>
+
+  <vendor
+      email="intellij@achimonline.de"
+      url="https://www.achimonline.de">
+          Achim Seufert
+  </vendor>
 
   <description><![CDATA[
       Automatically organizes your modified files by moving them into predefined changelists.
-    ]]></description>
-
-  <change-notes><![CDATA[
-      <b>1.9</b>
-      <ul>
-        <li>updated code, due to API-deprecation warnings</li>
-        <li>upgraded dependencies</li>
-        <li>Gradle-wrapper update</li>
-      </ul>
-      <b>1.8</b>
-      <ul>
-        <li>new feature: automatically organize upon additions to changelist</li>
-      </ul>
-      <b>1.7</b>
-      <ul>
-        <li>refactorings to get rid of deprecated API-calls/-usage</li>
-        <li>raised min-version of compatibility to 201 (202013)</li>
-	    <li>other minor code improvements</li>
-        <li>Gradle-wrapper update</li>
-      </ul>
-      <b>1.6</b>
-      <ul>
-        <li>fixed regex-creation for patterns containing dots</li>
-      </ul>
-      <b>1.5</b>
-      <ul>
-        <li>added 'vcs' module-dependency (improving product compatiblity)</li>
-      </ul>
-      <b>1.4</b>
-      <ul>
-        <li>migration to Gradle-based plugin/project</li>
-        <li>minor code changes/updates</li>
-      </ul>
-      <b>1.3</b>
-      <ul>
-        <li>minor code refactorings</li>
-        <li>improved/enhanced unit-tests</li>
-        <li>small bugfix (don't try to delete an empty changelist if it's the default-changelist)</li>
-      </ul>
-      <b>1.2.1</b>
-      <ul>
-        <li>added unit-testing for source-code</li>
-        <li>minor code cosmetics</li>
-      </ul>
-      <b>1.2</b>
-      <ul>
-        <li>new feature/setting: apply organizer-items on current default-changelist only</li>
-        <li>bugfixes</li>
-      </ul>
-      <b>1.1</b>
-      <ul>
-        <li>organizer-items can be ordered now</li>
-        <li>new features/settings: stop applying items on a file after first match; remove empty changelists</li>
-      </ul>
-      <b>1.0</b>
-      <ul>
-        <li>initial version</li>
-      </ul>
-    ]]>
-  </change-notes>
+  ]]></description>
 
   <depends>com.intellij.modules.vcs</depends>
   

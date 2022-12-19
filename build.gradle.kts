@@ -1,0 +1,60 @@
+import org.jetbrains.changelog.Changelog
+
+fun properties(key: String) = project.findProperty(key).toString()
+
+plugins {
+    id("java")
+    id("org.jetbrains.intellij") version "1.11.0"
+    id("org.jetbrains.changelog") version "2.0.0"
+    id("com.github.ben-manes.versions") version "0.44.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+intellij {
+    pluginName.set(properties("pluginName"))
+    version.set(properties("platformVersion"))
+    updateSinceUntilBuild.set(false)
+}
+
+dependencies {
+    implementation("org.projectlombok:lombok:1.18.24")
+    annotationProcessor("org.projectlombok:lombok:1.18.24")
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:4.10.0")
+    testImplementation("org.powermock:powermock-api-mockito2:2.0.9")
+    testImplementation("org.powermock:powermock-module-junit4:2.0.9")
+}
+
+changelog {
+    version.set(properties("pluginVersion"))
+}
+
+tasks {
+    properties("javaVersion").let {
+        withType<JavaCompile> {
+            sourceCompatibility = it
+            targetCompatibility = it
+        }
+    }
+
+    patchPluginXml {
+        version.set(properties("pluginVersion"))
+        sinceBuild.set(properties("pluginSinceBuild"))
+        changeNotes.set(provider {
+            changelog.renderItem(
+                changelog.getLatest(),
+                Changelog.OutputType.HTML
+            )
+        })
+    }
+
+    publishPlugin {
+        if (project.hasProperty("JB_PLUGIN_PUBLISH_TOKEN")) {
+            token.set(project.property("JB_PLUGIN_PUBLISH_TOKEN").toString())
+        }
+    }
+}
