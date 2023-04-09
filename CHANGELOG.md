@@ -1,3 +1,10 @@
+## [1.10.1]
+
+### Changed
+- various minor improvements (unit tests re-activated; buildfile refactoring)
+- dependency updates
+- Gradle-wrapper update
+
 ## [1.10.0]
 
 ### Changed

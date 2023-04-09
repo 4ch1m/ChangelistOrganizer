@@ -9,10 +9,6 @@
           Achim Seufert
   </vendor>
 
-  <description><![CDATA[
-      Automatically organizes your modified files by moving them into predefined changelists.
-  ]]></description>
-
   <depends>com.intellij.modules.vcs</depends>
   
   <extensions defaultExtensionNs="com.intellij">

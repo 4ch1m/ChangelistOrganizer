@@ -1,12 +1,16 @@
 import org.jetbrains.changelog.Changelog
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 fun properties(key: String) = project.findProperty(key).toString()
 
+version = properties("pluginVersion")
+description = properties("pluginDescription")
+
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.11.0"
+    id("org.jetbrains.intellij") version "1.13.3"
     id("org.jetbrains.changelog") version "2.0.0"
-    id("com.github.ben-manes.versions") version "0.44.0"
+    id("com.github.ben-manes.versions") version "0.46.0"
 }
 
 repositories {
@@ -19,14 +23,17 @@ intellij {
     updateSinceUntilBuild.set(false)
 }
 
+val lombokVersion = "1.18.26"
+
 dependencies {
-    implementation("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+    testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:4.10.0")
-    testImplementation("org.powermock:powermock-api-mockito2:2.0.9")
-    testImplementation("org.powermock:powermock-module-junit4:2.0.9")
+    testImplementation("org.mockito:mockito-core:5.2.0")
 }
 
 changelog {
@@ -41,7 +48,18 @@ tasks {
         }
     }
 
+    withType<DependencyUpdatesTask> {
+        rejectVersionIf {
+            (
+                listOf("RELEASE", "FINAL", "GA").any { candidate.version.toUpperCase().contains(it) }
+                ||
+                "^[0-9,.v-]+(-r)?$".toRegex().matches(candidate.version)
+            ).not()
+        }
+    }
+
     patchPluginXml {
+        pluginDescription.set(properties("pluginDescription"))
         version.set(properties("pluginVersion"))
         sinceBuild.set(properties("pluginSinceBuild"))
         changeNotes.set(provider {

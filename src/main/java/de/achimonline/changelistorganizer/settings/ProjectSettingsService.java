@@ -8,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
 
 @State(name = "ChangelistOrganizerProjectSettings", storages = {@Storage("changelistorganizer_project.xml")})
 public class ProjectSettingsService implements PersistentStateComponent<ProjectSettings> {
-
     ProjectSettings projectSettings = new ProjectSettings();
 
     @Nullable
@@ -21,5 +20,4 @@ public class ProjectSettingsService implements PersistentStateComponent<ProjectS
     public void loadState(@NotNull ProjectSettings projectSettings) {
         this.projectSettings = projectSettings;
     }
-
 }

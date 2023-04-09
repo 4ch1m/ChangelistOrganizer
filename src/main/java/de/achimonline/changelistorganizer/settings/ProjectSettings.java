@@ -10,7 +10,6 @@ import java.util.List;
 
 @Data
 public class ProjectSettings implements Serializable {
-
     private List<ChangelistOrganizerItem> changelistOrganizerItems = new ArrayList<>();
     private boolean onlyApplyItemsOnDefaultChangelist = true;
     private boolean stopApplyingItemsAfterFirstMatch = true;
@@ -26,5 +25,4 @@ public class ProjectSettings implements Serializable {
 
         return projectSettingsService.getState();
     }
-
  }

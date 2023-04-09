@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 
 public class ChangelistOrganizerListener implements StartupActivity, DumbAware {
-
     @Override
     public void runActivity(@NotNull Project project) {
         ChangeListManager.getInstance(project).addChangeListListener(new ChangeListListener() {
@@ -25,5 +24,4 @@ public class ChangelistOrganizerListener implements StartupActivity, DumbAware {
             }
         });
     }
-
 }
