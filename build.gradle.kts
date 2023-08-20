@@ -8,9 +8,9 @@ description = properties("pluginDescription")
 
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.13.3"
-    id("org.jetbrains.changelog") version "2.0.0"
-    id("com.github.ben-manes.versions") version "0.46.0"
+    id("org.jetbrains.intellij") version "1.15.0"
+    id("org.jetbrains.changelog") version "2.1.2"
+    id("com.github.ben-manes.versions") version "0.47.0"
 }
 
 repositories {
@@ -23,7 +23,7 @@ intellij {
     updateSinceUntilBuild.set(false)
 }
 
-val lombokVersion = "1.18.26"
+val lombokVersion = "1.18.28"
 
 dependencies {
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
@@ -33,7 +33,7 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.2.0")
+    testImplementation("org.mockito:mockito-core:5.4.0")
 }
 
 changelog {
@@ -51,7 +51,7 @@ tasks {
     withType<DependencyUpdatesTask> {
         rejectVersionIf {
             (
-                listOf("RELEASE", "FINAL", "GA").any { candidate.version.toUpperCase().contains(it) }
+                listOf("RELEASE", "FINAL", "GA").any { candidate.version.uppercase().contains(it) }
                 ||
                 "^[0-9,.v-]+(-r)?$".toRegex().matches(candidate.version)
             ).not()
