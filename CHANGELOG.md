@@ -1,3 +1,9 @@
+## [1.10.2]
+
+### Changed
+- dependency updates
+- Gradle-wrapper update
+
 ## [1.10.1]
 
 ### Changed
