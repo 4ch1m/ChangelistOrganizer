@@ -1,3 +1,10 @@
+## [1.10.3]
+
+### Changed
+- removed/replaced deprecated function calls 
+- dependency updates
+- Gradle-wrapper update
+
 ## [1.10.2]
 
 ### Changed

@@ -5,7 +5,6 @@ import com.intellij.ui.table.JBTable;
 import de.achimonline.changelistorganizer.ChangelistOrganizerIcons;
 import de.achimonline.changelistorganizer.ChangelistOrganizerItem;
 import de.achimonline.changelistorganizer.ChangelistOrganizerStrings;
-import org.apache.commons.lang.ObjectUtils;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class ProjectSettingsPane implements Disposable {
     private JPanel panel;
@@ -224,7 +224,7 @@ public class ProjectSettingsPane implements Disposable {
                     break;
             }
 
-            if (!ObjectUtils.equals(newValue, oldValue)) {
+            if (!Objects.equals(newValue, oldValue)) {
                 modified = true;
             }
         }

@@ -8,9 +8,9 @@ description = properties("pluginDescription")
 
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.15.0"
-    id("org.jetbrains.changelog") version "2.1.2"
-    id("com.github.ben-manes.versions") version "0.47.0"
+    id("org.jetbrains.intellij") version "1.17.2"
+    id("org.jetbrains.changelog") version "2.2.0"
+    id("com.github.ben-manes.versions") version "0.51.0"
 }
 
 repositories {
@@ -23,7 +23,7 @@ intellij {
     updateSinceUntilBuild.set(false)
 }
 
-val lombokVersion = "1.18.28"
+val lombokVersion = "1.18.30"
 
 dependencies {
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
@@ -33,7 +33,7 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.4.0")
+    testImplementation("org.mockito:mockito-core:5.10.0")
 }
 
 changelog {
